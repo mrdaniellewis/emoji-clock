@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emoji clock</title>
+<link id="favicon" rel="icon" type="image/svg+xml">
+<style>
+body {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+#icon {
+  font-size: 80vmin;
+  /* above 600px the emoji becomes clipped */
+  font-size: clamp(1px, 80vmin, 600px);
+  max-height: 100vh;
+  overflow: hidden;
+}
+</style>
+<body>
+<div id="icon"></div>
+<script>
+  const icons = new Map([
+    [0, '🕛'],
+    [0.5, '🕧'],
+    [1, '🕐'],
+    [1.5, '🕜'],
+    [2, '🕑'],
+    [2.5, '🕝'],
+    [3, '🕒'],
+    [3.5, '🕞'],
+    [4, '🕓'],
+    [4.5, '🕟'],
+    [5, '🕔'],
+    [5.5, '🕠'],
+    [6, '🕕'],
+    [6.5, '🕡'],
+    [7, '🕖'],
+    [7.5, '🕢'],
+    [8, '🕗'],
+    [8.5, '🕣'],
+    [9, '🕘'],
+    [9.5, '🕤'],
+    [10, '🕙'],
+    [10.5, '🕥'],
+    [11, '🕚'],
+    [11.5, '🕦'],
+  ]);
+
+  function setIcon() {
+    const date = new Date();
+    const hour = date.getHours() % 12;
+    const minutes = Math.floor(date.getMinutes() / 30) / 2;
+    const icon = icons.get(hour + minutes);
+    document.getElementById('icon').innerHTML = icon;
+    document.getElementById('favicon').href = `
+      data:image/svg+xml,
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <text y="1em" font-size="80">${icon}</text>
+      </svg>
+    `.replace(/\n +/g, '').trim();
+  }
+
+  setIcon();
+
+  setInterval(setIcon, 60e3);
+</script>
