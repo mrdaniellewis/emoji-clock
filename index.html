@@ -64,6 +64,8 @@ body {
   }
 
   setIcon();
-
-  setInterval(setIcon, 60e3);
+  setTimeout(() => {
+    setIcon();
+    setInterval(setIcon, 60e3);
+  }, (60 - new Date().getSeconds()) * 1000);
 </script>
